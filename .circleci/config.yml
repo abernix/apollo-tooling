@@ -178,7 +178,8 @@ workflows:
       #     <<: *common_non_publish_filters
       # - Generated Types Check:
       #     <<: *common_non_publish_filters
-      - Build CLI:
+      - oss/oclif_build_from_verdaccio_storage:
+          name: Build CLI
           <<: *common_non_publish_filters
           requires:
             - Package tarballs
