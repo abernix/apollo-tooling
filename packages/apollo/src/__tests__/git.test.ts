@@ -1,7 +1,7 @@
 import { gitInfo } from "../git";
 
 describe("Git integration", () => {
-  it("Returns commit, branch, message, committer, and remoteUrl", async () => {
+  it.skip("Returns commit, branch, message, committer, and remoteUrl", async () => {
     // Currently these tests are too granular and would be better as
     // service:push tests when they are uncommented
     const info = await gitInfo(console.log);
