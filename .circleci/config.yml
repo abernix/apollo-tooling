@@ -120,8 +120,9 @@ jobs:
             ls -la ./.packed-tarballs
             mkdir .tmp-oclif/
             cd ./.tmp-oclif/
-
-            npm i ../.packed-tarballs/apollo/
+            npm i ../.packed-tarballs/apollo/apollo*.tgz
+            npx -p @oclif/dev-cli oclif-dev pack --targets=darwin-x64
+            ls -laR .
       # - run:
       #     name: Make tmp dir
       #     command: cd packages/apollo && mkdir tmp && cd tmp && npm init -y && git init
