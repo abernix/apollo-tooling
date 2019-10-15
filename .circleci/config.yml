@@ -181,6 +181,7 @@ workflows:
       #     <<: *common_non_publish_filters
       - oss/oclif_build_from_verdaccio_storage:
           name: Build CLI
+          package: apollo
           <<: *common_non_publish_filters
           requires:
             - Package tarballs
