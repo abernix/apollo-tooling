@@ -106,27 +106,40 @@ jobs:
   Build CLI:
     executor: { name: oss/node }
     steps:
-      - oss/install_specific_npm_version
-      - checkout
-      - oss/npm_clean_install_with_caching
+      # Restore the workspace we previously saved here, thereby avoiding
+      # the need to re-build and ensuring that we use the exact version we
+      # previously built and tested.
+      - attach_workspace:
+          at: .
       - run:
-          name: Make tmp dir
-          command: cd packages/apollo && mkdir tmp && cd tmp && npm init -y && git init
-      - run:
-          name: Install apollo in tmp folder and generate lockfile
-          command: npm i apollo && cd node_modules/apollo && npm i --package-lock-only
-          working_directory: packages/apollo/tmp
-      - run:
-          name: Copy package and lockfile to project
-          command: rm package.json && cp tmp/node_modules/apollo/package* .
-          working_directory: packages/apollo
-      - run:
-          name: Build CLI
-          command: npx -p @oclif/dev-cli oclif-dev pack --targets=darwin-x64
-          working_directory: packages/apollo
-      - store_artifacts:
-          path: packages/apollo/dist
-          destination: apollo-cli
+          name: Build OClif
+          command: |
+            pwd
+            ls -la
+            # Use the tarballs which were packed by the Lerna tarball step.
+            ls -la ./.packed-tarballs
+            mkdir .tmp-oclif/
+            cd ./.tmp-oclif/
+
+            npm i ../.packed-tarballs/apollo/
+      # - run:
+      #     name: Make tmp dir
+      #     command: cd packages/apollo && mkdir tmp && cd tmp && npm init -y && git init
+      # - run:
+      #     name: Install apollo in tmp folder and generate lockfile
+      #     command: npm i apollo && cd node_modules/apollo && npm i --package-lock-only
+      #     working_directory: packages/apollo/tmp
+      # - run:
+      #     name: Copy package and lockfile to project
+      #     command: rm package.json && cp tmp/node_modules/apollo/package* .
+      #     working_directory: packages/apollo
+      # - run:
+      #     name: Build CLI
+      #     command: npx -p @oclif/dev-cli oclif-dev pack --targets=darwin-x64
+      #     working_directory: packages/apollo
+      # - store_artifacts:
+      #     path: packages/apollo/dist
+      #     destination: apollo-cli
       # - run:
       #     name: Publish
       #     command: npx -p @oclif/dev-cli oclif-dev publish --targets=darwin-x64
