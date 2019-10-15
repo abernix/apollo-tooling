@@ -179,6 +179,8 @@ workflows:
       #     <<: *common_non_publish_filters
       - Build CLI:
           <<: *common_non_publish_filters
+          requires:
+            - Package tarballs
       - oss/lerna_tarballs:
           name: Package tarballs
           <<: *common_non_publish_filters
