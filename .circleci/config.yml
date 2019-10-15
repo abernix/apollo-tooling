@@ -169,14 +169,14 @@ workflows:
           <<: *common_non_publish_filters
       - NodeJS 10:
           <<: *common_non_publish_filters
-      - VSCode:
-          <<: *common_non_publish_filters
-      - Linting:
-          <<: *common_non_publish_filters
-      - Query Check:
-          <<: *common_non_publish_filters
-      - Generated Types Check:
-          <<: *common_non_publish_filters
+      # - VSCode:
+      #     <<: *common_non_publish_filters
+      # - Linting:
+      #     <<: *common_non_publish_filters
+      # - Query Check:
+      #     <<: *common_non_publish_filters
+      # - Generated Types Check:
+      #     <<: *common_non_publish_filters
       - Build CLI:
           <<: *common_non_publish_filters
       - oss/lerna_tarballs:
